@@ -22,9 +22,13 @@ use Throwable;
 class BackgroundCommand extends Command
 {
 
-    public function __construct(string $name)
+    /** @var callable */
+    private $handler;
+
+    public function __construct(string $name, callable $handler)
     {
         parent::__construct("batch:{$name}");
+        $this->handler = $handler;
     }
 
     protected function configure()
@@ -51,7 +55,8 @@ class BackgroundCommand extends Command
         $process = Process::findById($batch->getId());
 
         try {
-            $batch->run($process);
+            $handler = $this->handler;
+            $handler($process, $batch);
         } catch (Throwable $exception) {
             $error = new Error('Fatal plugin error. Please contact plugin developer.');
             $process->terminate($error);
