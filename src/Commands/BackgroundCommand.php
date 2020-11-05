@@ -9,6 +9,7 @@ namespace Leadvertex\Plugin\Components\Batch\Commands;
 
 
 use Leadvertex\Plugin\Components\Batch\Batch;
+use Leadvertex\Plugin\Components\Batch\BatchHandlerInterface;
 use Leadvertex\Plugin\Components\Db\Components\Connector;
 use Leadvertex\Plugin\Components\Process\Components\Error;
 use Leadvertex\Plugin\Components\Process\Process;
@@ -22,10 +23,10 @@ use Throwable;
 class BackgroundCommand extends Command
 {
 
-    /** @var callable */
+    /** @var BatchHandlerInterface */
     private $handler;
 
-    public function __construct(string $name, callable $handler)
+    public function __construct(string $name, BatchHandlerInterface $handler)
     {
         parent::__construct("batch:{$name}");
         $this->handler = $handler;
