@@ -1,6 +1,6 @@
 <?php
 /**
- * Created for plugin-core.
+ * Created for plugin-component-batch
  * Datetime: 03.07.2018 14:41
  * @author Timur Kasumov aka XAKEPEHOK
  */
