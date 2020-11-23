@@ -85,19 +85,19 @@ class Batch implements ModelInterface
         );
     }
 
-    protected static function beforeDeserialize(array $data): array
-    {
-        $data['token'] = unserialize($data['token']);
-        $data['fsp'] = unserialize($data['fsp']);
-        $data['options'] = unserialize($data['options']);
-        return $data;
-    }
-
-    protected static function afterSerialize(array $data): array
+    protected static function beforeWrite(array $data): array
     {
         $data['token'] = serialize($data['token']);
         $data['fsp'] = serialize($data['fsp']);
         $data['options'] = serialize($data['options']);
+        return $data;
+    }
+
+    protected static function afterRead(array $data): array
+    {
+        $data['token'] = unserialize($data['token']);
+        $data['fsp'] = unserialize($data['fsp']);
+        $data['options'] = unserialize($data['options']);
         return $data;
     }
 
