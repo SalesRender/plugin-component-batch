@@ -8,12 +8,12 @@
 namespace Leadvertex\Plugin\Components\Batch;
 
 
+use Leadvertex\Plugin\Components\Access\Token\InputTokenInterface;
 use Leadvertex\Plugin\Components\ApiClient\ApiClient;
 use Leadvertex\Plugin\Components\ApiClient\ApiFilterSortPaginate;
-use Leadvertex\Plugin\Components\Db\Model;
+use Leadvertex\Plugin\Components\Db\ModelInterface;
+use Leadvertex\Plugin\Components\Db\ModelTrait;
 use Leadvertex\Plugin\Components\Form\FormData;
-use Leadvertex\Plugin\Components\Token\InputTokenInterface;
-use Leadvertex\Plugin\Components\Token\TokenException;
 
 /**
  * Class Session
@@ -24,22 +24,30 @@ use Leadvertex\Plugin\Components\Token\TokenException;
  * @property ApiFilterSortPaginate $fsp
  * @property array options
  */
-class Batch extends Model
+class Batch implements ModelInterface
 {
+
+    use ModelTrait;
+
+    private int $createdAt;
+
+    private InputTokenInterface $token;
+
+    private ApiFilterSortPaginate $fsp;
+
+    private string $lang;
+
+    /** @var FormData[]  */
+    private array $options;
 
     public function __construct(InputTokenInterface $token, ApiFilterSortPaginate $fsp, string $lang)
     {
-        parent::__construct($token->getId());
-
+        $this->createdAt = time();
+        $this->id = $token->getId();
         $this->token = $token;
         $this->fsp = $fsp;
         $this->lang = $lang;
-
         $this->options = [];
-
-        if ($token->getCompanyId() != $this->getCompanyId()) {
-            throw new TokenException('Mismatch token company ID and current company ID');
-        }
     }
 
     public function getToken(): InputTokenInterface
@@ -47,22 +55,14 @@ class Batch extends Model
         return $this->token;
     }
 
-    public function getLang(): string
-    {
-        return $this->lang;
-    }
-
     public function getFsp(): ApiFilterSortPaginate
     {
         return $this->fsp;
     }
 
-    public function getApiClient(): ApiClient
+    public function getLang(): string
     {
-        return new ApiClient(
-            $this->token->getBackendUri() . 'companies/stark-industries/CRM',
-            (string) $this->token->getOutputToken()
-        );
+        return $this->lang;
     }
 
     public function getOptions(int $number): FormData
@@ -77,4 +77,37 @@ class Batch extends Model
         $this->options = $options;
     }
 
+    public function getApiClient(): ApiClient
+    {
+        return new ApiClient(
+            $this->token->getBackendUri() . 'companies/stark-industries/CRM',
+            (string) $this->token->getOutputToken()
+        );
+    }
+
+    protected static function beforeDeserialize(array $data): array
+    {
+        $data['token'] = unserialize($data['token']);
+        $data['fsp'] = unserialize($data['fsp']);
+        $data['options'] = unserialize($data['options']);
+        return $data;
+    }
+
+    protected static function afterSerialize(array $data): array
+    {
+        $data['token'] = serialize($data['token']);
+        $data['fsp'] = serialize($data['fsp']);
+        $data['options'] = serialize($data['options']);
+        return $data;
+    }
+
+    public static function schema(): array
+    {
+        return [
+            'token' => ['TEXT', 'NOT NULL'],
+            'fsp' => ['TEXT', 'NOT NULL'],
+            'lang' => ['CHAR(5)', 'NOT NULL'],
+            'options' => ['TEXT'],
+        ];
+    }
 }

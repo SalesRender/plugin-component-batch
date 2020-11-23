@@ -24,7 +24,7 @@ class BackgroundCommand extends Command
 {
 
     /** @var BatchHandlerInterface */
-    private $handler;
+    private BatchHandlerInterface $handler;
 
     public function __construct(string $name, BatchHandlerInterface $handler)
     {
@@ -36,8 +36,7 @@ class BackgroundCommand extends Command
     {
         $this
             ->setDescription('Run handle operation in background')
-            ->addArgument('id', InputArgument::REQUIRED)
-            ->addArgument('companyId', InputArgument::REQUIRED);
+            ->addArgument('id', InputArgument::REQUIRED);
     }
 
     /**
@@ -48,9 +47,12 @@ class BackgroundCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        Connector::setCompanyId($input->getArgument('companyId'));
         $batch = Batch::findById($input->getArgument('id'));
+        if (is_null($batch)) {
+            return 0;
+        }
 
+        Connector::setReference($batch->getToken()->getPluginReference());
         Translator::setLang(str_replace('-', '_', $batch->lang));
 
         $process = Process::findById($batch->getId());

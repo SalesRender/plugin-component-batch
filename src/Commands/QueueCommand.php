@@ -9,12 +9,12 @@ namespace Leadvertex\Plugin\Components\Batch\Commands;
 
 
 use Khill\Duration\Duration;
-use Leadvertex\Plugin\Components\Db\Components\Connector;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
+use Leadvertex\Plugin\Components\Process\Process as ProcessModel;
 use XAKEPEHOK\Path\Path;
 
 class QueueCommand extends Command
@@ -22,23 +22,16 @@ class QueueCommand extends Command
 
     const MAX_MEMORY = 25 * 1024 * 1024;
 
-    /** @var int */
-    private $started;
+    private int $started;
 
-    /** @var int */
-    private $limit;
-
-    /** @var resource */
-    private $mutex;
+    private int $limit;
 
     /** @var Process[] */
-    private $processes = [];
+    private array $processes = [];
 
-    /** @var int */
-    private $handed = 0;
+    private int $handed = 0;
 
-    /** @var array */
-    private $failed = [];
+    private array $failed = [];
 
     public function __construct(string $name)
     {
@@ -48,36 +41,22 @@ class QueueCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->mutex = fopen((string) Path::root()->down('mutex.lock'), 'c');
+        $mutex = fopen((string) Path::root()->down('mutex.lock'), 'c');
         $this->started = time();
-        if (!flock($this->mutex, LOCK_EX|LOCK_NB)) {
-            fclose($this->mutex);
+        if (!flock($mutex, LOCK_EX|LOCK_NB)) {
+            fclose($mutex);
             throw new RuntimeException('Queue already running');
         }
 
-        $db = Connector::db();
-        $table = \Leadvertex\Plugin\Components\Process\Process::tableName();
-        $lastTime = time();
-
         $this->writeUsedMemory($output);
 
+        $lastTime = time();
         do {
 
             if ((time() - 5 ) > $lastTime) {
                 $this->writeUsedMemory($output);
                 $lastTime = time();
             }
-
-            $data = $db->select(
-                $table,
-                ['companyId', 'id'],
-                [
-                    'tag_1' => \Leadvertex\Plugin\Components\Process\Process::STATE_SCHEDULED,
-                    'id[!]' => array_keys($this->failed),
-                    "ORDER" => ["createdAt" => "ASC"],
-                    'LIMIT' => $this->limit
-                ]
-            );
 
             foreach ($this->processes as $key => $process) {
                 if (!$process->isTerminated()) {
@@ -95,9 +74,17 @@ class QueueCommand extends Command
                 unset($this->processes[$key]);
             }
 
-            foreach ($data as $ids) {
-                if ($this->handleQueue($ids['companyId'], $ids['id'])) {
-                    $output->writeln("<info>[STARTED]</info> Process id '{$ids['companyId']}_{$ids['id']}'.");
+            /** @var ProcessModel[] $processes */
+            $processes = ProcessModel::findByCondition([
+                'state' => ProcessModel::STATE_SCHEDULED,
+                'id[!]' => array_keys($this->failed),
+                "ORDER" => ["createdAt" => "ASC"],
+                'LIMIT' => $this->limit
+            ]);
+
+            foreach ($processes as $process) {
+                if ($this->handleQueue($process)) {
+                    $output->writeln("<info>[STARTED]</info> Process id '{$process->getId()}' for company #{$process->getCompanyId()}.");
                 }
             }
 
@@ -105,13 +92,13 @@ class QueueCommand extends Command
 
         $output->writeln('<info> -- High memory usage. Stopped -- </info>');
 
-        flock($this->mutex, LOCK_UN);
-        fclose($this->mutex);
+        flock($mutex, LOCK_UN);
+        fclose($mutex);
 
         return 0;
     }
 
-    private function handleQueue(string $companyId, string $id): bool
+    private function handleQueue(ProcessModel $processModel): bool
     {
         $this->processes = array_filter($this->processes, function (Process $process) {
             return $process->isRunning();
@@ -121,21 +108,18 @@ class QueueCommand extends Command
             return false;
         }
 
-        $key = "{$companyId}_{$id}";
-
-        if (isset($this->processes[$key])) {
+        if (isset($this->processes[$processModel->getId()])) {
             return false;
         }
 
-        $this->processes[$key] = new Process([
+        $this->processes[$processModel->getId()] = new Process([
             $_ENV['LV_PLUGIN_PHP_BINARY'],
             (string) Path::root()->down('console.php'),
             str_replace('queue:', 'batch:', $this->getName()),
-            $id,
-            $companyId
+            $processModel->getId(),
         ]);
 
-        $this->processes[$key]->start();
+        $this->processes[$processModel->getId()]->start();
 
         $this->handed++;
 

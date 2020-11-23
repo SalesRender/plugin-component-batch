@@ -16,14 +16,15 @@
     }
   },
   "require": {
-    "php": ">=7.1.0",
+    "php": ">=7.4.0",
     "khill/php-duration": "^1.0",
     "symfony/console": "^5.0",
     "symfony/process": "^5.0",
+    "leadvertex/plugin-component-db": "^0.3.1",
     "leadvertex/plugin-component-translations": "^0.1.1",
-    "leadvertex/plugin-component-token": "^0.2.0",
-    "leadvertex/plugin-component-process": "^0.3.7",
-    "leadvertex/plugin-component-api-client": "^0.4.0",
+    "leadvertex/plugin-component-access": "^0.1.0",
+    "leadvertex/plugin-component-process": "^0.4.0",
+    "leadvertex/plugin-component-api-client": "^0.5.0",
     "leadvertex/plugin-component-form": "^0.8.2"
   }
 }
