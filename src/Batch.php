@@ -8,11 +8,13 @@
 namespace Leadvertex\Plugin\Components\Batch;
 
 
+use Leadvertex\Plugin\Components\Access\Token\GraphqlInputToken;
 use Leadvertex\Plugin\Components\Access\Token\InputTokenInterface;
 use Leadvertex\Plugin\Components\ApiClient\ApiClient;
 use Leadvertex\Plugin\Components\ApiClient\ApiFilterSortPaginate;
 use Leadvertex\Plugin\Components\Db\Model;
 use Leadvertex\Plugin\Components\Form\FormData;
+use RuntimeException;
 
 /**
  * Class Session
@@ -82,6 +84,25 @@ class Batch extends Model
         );
     }
 
+    public static function find(): ?Model
+    {
+        $token = GraphqlInputToken::getInstance();
+        if (is_null($token)) {
+            throw new RuntimeException('Batch can not be found without GraphqlInputToken::getInstance()');
+        }
+        return self::findById($token->getId());
+    }
+
+    public static function schema(): array
+    {
+        return [
+            'token' => ['TEXT', 'NOT NULL'],
+            'fsp' => ['TEXT', 'NOT NULL'],
+            'lang' => ['CHAR(5)', 'NOT NULL'],
+            'options' => ['TEXT'],
+        ];
+    }
+
     protected static function beforeWrite(array $data): array
     {
         $data['token'] = serialize($data['token']);
@@ -98,13 +119,4 @@ class Batch extends Model
         return $data;
     }
 
-    public static function schema(): array
-    {
-        return [
-            'token' => ['TEXT', 'NOT NULL'],
-            'fsp' => ['TEXT', 'NOT NULL'],
-            'lang' => ['CHAR(5)', 'NOT NULL'],
-            'options' => ['TEXT'],
-        ];
-    }
 }
