@@ -64,9 +64,9 @@ class Batch extends Model
         return $this->lang;
     }
 
-    public function getOptions(int $number): FormData
+    public function getOptions(int $number): ?FormData
     {
-        return $this->options[$number] ?? new FormData([]);
+        return $this->options[$number] ?? null;
     }
 
     public function setOptions(int $number, FormData $data)
