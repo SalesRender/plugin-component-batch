@@ -11,8 +11,7 @@ namespace Leadvertex\Plugin\Components\Batch;
 use Leadvertex\Plugin\Components\Access\Token\InputTokenInterface;
 use Leadvertex\Plugin\Components\ApiClient\ApiClient;
 use Leadvertex\Plugin\Components\ApiClient\ApiFilterSortPaginate;
-use Leadvertex\Plugin\Components\Db\ModelInterface;
-use Leadvertex\Plugin\Components\Db\ModelTrait;
+use Leadvertex\Plugin\Components\Db\Model;
 use Leadvertex\Plugin\Components\Form\FormData;
 
 /**
@@ -24,10 +23,8 @@ use Leadvertex\Plugin\Components\Form\FormData;
  * @property ApiFilterSortPaginate $fsp
  * @property array options
  */
-class Batch implements ModelInterface
+class Batch extends Model
 {
-
-    use ModelTrait;
 
     private int $createdAt;
 
