@@ -25,6 +25,6 @@
     "leadvertex/plugin-component-access": "^0.1.0",
     "leadvertex/plugin-component-process": "^0.4.0",
     "leadvertex/plugin-component-api-client": "^0.5.0",
-    "leadvertex/plugin-component-form": "^0.9.0"
+    "leadvertex/plugin-component-form": "^0.10.0"
   }
 }
