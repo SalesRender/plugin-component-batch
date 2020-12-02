@@ -17,7 +17,7 @@ use Symfony\Component\Process\Process;
 use Leadvertex\Plugin\Components\Process\Process as ProcessModel;
 use XAKEPEHOK\Path\Path;
 
-class QueueCommand extends Command
+class BatchQueueCommand extends Command
 {
 
     const MAX_MEMORY = 25 * 1024 * 1024;
@@ -33,9 +33,9 @@ class QueueCommand extends Command
 
     private array $failed = [];
 
-    public function __construct(string $name)
+    public function __construct()
     {
-        parent::__construct("queue:{$name}");
+        parent::__construct("batch:queue");
         $this->limit = $_ENV['LV_PLUGIN_QUEUE_LIMIT'] ?? 0;
     }
 
@@ -115,7 +115,7 @@ class QueueCommand extends Command
         $this->processes[$processModel->getId()] = new Process([
             $_ENV['LV_PLUGIN_PHP_BINARY'],
             (string) Path::root()->down('console.php'),
-            str_replace('queue:', 'batch:', $this->getName()),
+            'batch:handle',
             $processModel->getId(),
         ]);
 

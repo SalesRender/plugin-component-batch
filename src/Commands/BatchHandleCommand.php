@@ -9,7 +9,7 @@ namespace Leadvertex\Plugin\Components\Batch\Commands;
 
 
 use Leadvertex\Plugin\Components\Batch\Batch;
-use Leadvertex\Plugin\Components\Batch\BatchHandlerInterface;
+use Leadvertex\Plugin\Components\Batch\BatchHandler;
 use Leadvertex\Plugin\Components\Db\Components\Connector;
 use Leadvertex\Plugin\Components\Process\Components\Error;
 use Leadvertex\Plugin\Components\Process\Process;
@@ -20,16 +20,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
-class BackgroundCommand extends Command
+class BatchHandleCommand extends Command
 {
 
-    /** @var BatchHandlerInterface */
-    private BatchHandlerInterface $handler;
-
-    public function __construct(string $name, BatchHandlerInterface $handler)
+    public function __construct()
     {
-        parent::__construct("batch:{$name}");
-        $this->handler = $handler;
+        parent::__construct("batch:handle");
     }
 
     protected function configure()
@@ -53,13 +49,12 @@ class BackgroundCommand extends Command
         }
 
         Connector::setReference($batch->getToken()->getPluginReference());
-        Translator::setLang(str_replace('-', '_', $batch->lang));
+        Translator::setLang(str_replace('-', '_', $batch->getLang()));
 
         $process = Process::findById($batch->getId());
 
         try {
-            $handler = $this->handler;
-            $handler($process, $batch);
+            BatchHandler::getInstance()($process, $batch);
         } catch (Throwable $exception) {
             $error = new Error('Fatal plugin error. Please contact plugin developer.');
             $process->terminate($error);
