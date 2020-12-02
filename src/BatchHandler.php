@@ -13,11 +13,15 @@ use RuntimeException;
 final class BatchHandler
 {
 
-    private static BatchHandlerInterface $handler;
+    /** @var BatchHandlerInterface|callable */
+    private static $handler;
 
     private function __construct() {}
 
-    public static function config(BatchHandlerInterface $handler): void
+    /**
+     * @param BatchHandlerInterface|callable $handler
+     */
+    public static function config(callable $handler): void
     {
         self::$handler = $handler;
     }
@@ -25,10 +29,10 @@ final class BatchHandler
     public static function getInstance(): BatchHandlerInterface
     {
         if (!isset(self::$handler)) {
-            throw new RuntimeException('Batch form registry was not configured');
+            throw new RuntimeException('Batch handler was not configured');
         }
 
-        return self::$handler;
+        return (self::$handler instanceof BatchHandlerInterface) ? self::$handler : (self::$handler)();
     }
 
 }
