@@ -16,15 +16,6 @@ use Leadvertex\Plugin\Components\Db\Model;
 use Leadvertex\Plugin\Components\Form\FormData;
 use RuntimeException;
 
-/**
- * Class Session
- * @package Leadvertex\Plugin\Core\Macros\Models
- *
- * @property InputTokenInterface $token
- * @property string $lang
- * @property ApiFilterSortPaginate $fsp
- * @property array options
- */
 class Batch extends Model
 {
 
@@ -71,9 +62,12 @@ class Batch extends Model
 
     public function setOptions(int $number, FormData $data)
     {
-        $options = $this->options;
-        $options[$number] = $data;
-        $this->options = $options;
+        $this->options[$number]  = $data;
+    }
+
+    public function countOptions(): int
+    {
+        return count($this->options);
     }
 
     public function getApiClient(): ApiClient
