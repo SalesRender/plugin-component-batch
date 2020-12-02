@@ -17,12 +17,12 @@ final class BatchHandler
 
     private function __construct() {}
 
-    public function config(BatchHandlerInterface $handler): void
+    public static function config(BatchHandlerInterface $handler): void
     {
         self::$handler = $handler;
     }
 
-    public function getInstance(): BatchHandlerInterface
+    public static function getInstance(): BatchHandlerInterface
     {
         if (!isset(self::$handler)) {
             throw new RuntimeException('Batch form registry was not configured');
