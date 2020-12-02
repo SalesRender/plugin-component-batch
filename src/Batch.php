@@ -16,7 +16,7 @@ use Leadvertex\Plugin\Components\Db\Model;
 use Leadvertex\Plugin\Components\Form\FormData;
 use RuntimeException;
 
-class Batch extends Model
+final class Batch extends Model
 {
 
     private int $createdAt;
