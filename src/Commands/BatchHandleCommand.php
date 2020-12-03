@@ -8,6 +8,7 @@
 namespace Leadvertex\Plugin\Components\Batch\Commands;
 
 
+use Leadvertex\Plugin\Components\Access\Token\GraphqlInputToken;
 use Leadvertex\Plugin\Components\Batch\Batch;
 use Leadvertex\Plugin\Components\Batch\BatchHandler;
 use Leadvertex\Plugin\Components\Db\Components\Connector;
@@ -47,6 +48,8 @@ class BatchHandleCommand extends Command
         if (is_null($batch)) {
             return 0;
         }
+
+        GraphqlInputToken::setInstance($batch->getToken());
 
         Connector::setReference($batch->getToken()->getPluginReference());
         Translator::setLang(str_replace('-', '_', $batch->getLang()));

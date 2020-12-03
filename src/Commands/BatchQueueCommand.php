@@ -67,8 +67,7 @@ class BatchQueueCommand extends Command
                     $output->writeln("<fg=green>[FINISHED]</> Process id '{$key}' was finished.");
                 } else {
                     $output->writeln("<fg=red>[FAILED]</> Process id '{$key}' with code '{$process->getExitCode()}' and message '{$process->getExitCodeText()}'.");
-                    $ids = explode('_', $key);
-                    $this->failed[$ids[1]] = true;
+                    $this->failed[$key] = true;
                 }
 
                 unset($this->processes[$key]);
@@ -84,7 +83,7 @@ class BatchQueueCommand extends Command
 
             foreach ($processes as $process) {
                 if ($this->handleQueue($process)) {
-                    $output->writeln("<info>[STARTED]</info> Process id '{$process->getId()}' for company #{$process->getCompanyId()}.");
+                    $output->writeln("<info>[STARTED]</info> Process id '{$process->getId()}' for company #{$process->getCompanyId()} & plugin #{$process->getPluginId()}.");
                 }
             }
 
