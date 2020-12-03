@@ -19,16 +19,16 @@ use RuntimeException;
 final class Batch extends Model
 {
 
-    private int $createdAt;
+    protected int $createdAt;
 
-    private InputTokenInterface $token;
+    protected InputTokenInterface $token;
 
-    private ApiFilterSortPaginate $fsp;
+    protected ApiFilterSortPaginate $fsp;
 
-    private string $lang;
+    protected string $lang;
 
     /** @var FormData[]  */
-    private array $options;
+    protected array $options;
 
     public function __construct(InputTokenInterface $token, ApiFilterSortPaginate $fsp, string $lang)
     {
