@@ -8,8 +8,8 @@
 namespace Leadvertex\Plugin\Components\Batch;
 
 
+use Leadvertex\Plugin\Components\Batch\Exceptions\BatchContainerException;
 use Leadvertex\Plugin\Components\Form\Form;
-use RuntimeException;
 
 final class BatchContainer
 {
@@ -27,20 +27,29 @@ final class BatchContainer
         self::$handler = $handler;
     }
 
+    /**
+     * @param int $number
+     * @return Form|null
+     * @throws BatchContainerException
+     */
     public static function getForm(int $number): ?Form
     {
         if (!isset(self::$forms)) {
-            throw new RuntimeException('Batch forms was not configured');
+            throw new BatchContainerException('Batch forms was not configured', 100);
         }
 
         $form = self::$forms;
         return $form($number);
     }
 
+    /**
+     * @return BatchHandlerInterface
+     * @throws BatchContainerException
+     */
     public static function getHandler(): BatchHandlerInterface
     {
         if (!isset(self::$forms)) {
-            throw new RuntimeException('Batch handler was not configured');
+            throw new BatchContainerException('Batch handler was not configured', 200);
         }
 
         return self::$handler;
