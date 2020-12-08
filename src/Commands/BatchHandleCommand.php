@@ -10,7 +10,7 @@ namespace Leadvertex\Plugin\Components\Batch\Commands;
 
 use Leadvertex\Plugin\Components\Access\Token\GraphqlInputToken;
 use Leadvertex\Plugin\Components\Batch\Batch;
-use Leadvertex\Plugin\Components\Batch\BatchHandler;
+use Leadvertex\Plugin\Components\Batch\BatchContainer;
 use Leadvertex\Plugin\Components\Db\Components\Connector;
 use Leadvertex\Plugin\Components\Process\Components\Error;
 use Leadvertex\Plugin\Components\Process\Process;
@@ -44,6 +44,7 @@ class BatchHandleCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var Batch $batch */
         $batch = Batch::findById($input->getArgument('id'));
         if (is_null($batch)) {
             return 0;
@@ -54,10 +55,12 @@ class BatchHandleCommand extends Command
         Connector::setReference($batch->getToken()->getPluginReference());
         Translator::setLang(str_replace('-', '_', $batch->getLang()));
 
+        /** @var Process $process */
         $process = Process::findById($batch->getId());
 
         try {
-            BatchHandler::getInstance()($process, $batch);
+            $handler = BatchContainer::getHandler();
+            $handler($process, $batch);
         } catch (Throwable $exception) {
             $error = new Error('Fatal plugin error. Please contact plugin developer.');
             $process->terminate($error);
