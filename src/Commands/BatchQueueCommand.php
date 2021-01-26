@@ -87,6 +87,8 @@ class BatchQueueCommand extends Command
                 }
             }
 
+            sleep(1);
+
         } while (memory_get_usage(true) < self::MAX_MEMORY);
 
         $output->writeln('<info> -- High memory usage. Stopped -- </info>');
