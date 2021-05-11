@@ -27,16 +27,19 @@ final class Batch extends Model
 
     protected string $lang;
 
-    /** @var FormData[]  */
-    protected array $options;
+    protected array $arguments = [];
 
-    public function __construct(InputTokenInterface $token, ApiFilterSortPaginate $fsp, string $lang)
+    /** @var FormData[]  */
+    protected array $options = [];
+
+    public function __construct(InputTokenInterface $token, ApiFilterSortPaginate $fsp, string $lang, array $arguments = [])
     {
         $this->createdAt = time();
         $this->id = $token->getId();
         $this->token = $token;
         $this->fsp = $fsp;
         $this->lang = $lang;
+        $this->arguments = $arguments;
         $this->options = [];
     }
 
@@ -53,6 +56,11 @@ final class Batch extends Model
     public function getLang(): string
     {
         return $this->lang;
+    }
+
+    public function getArguments(): array
+    {
+        return $this->arguments;
     }
 
     public function getOptions(int $number): ?FormData
@@ -93,6 +101,7 @@ final class Batch extends Model
             'token' => ['TEXT', 'NOT NULL'],
             'fsp' => ['TEXT', 'NOT NULL'],
             'lang' => ['CHAR(5)', 'NOT NULL'],
+            'arguments' => ['TEXT'],
             'options' => ['TEXT'],
         ];
     }
@@ -101,6 +110,7 @@ final class Batch extends Model
     {
         $data['token'] = serialize($data['token']);
         $data['fsp'] = serialize($data['fsp']);
+        $data['arguments'] = serialize($data['arguments']);
         $data['options'] = serialize($data['options']);
         return $data;
     }
@@ -109,6 +119,7 @@ final class Batch extends Model
     {
         $data['token'] = unserialize($data['token']);
         $data['fsp'] = unserialize($data['fsp']);
+        $data['arguments'] = unserialize($data['arguments']);
         $data['options'] = unserialize($data['options']);
         return $data;
     }
