@@ -41,7 +41,7 @@ class BatchQueueCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $mutex = fopen((string) Path::root()->down('mutex.lock'), 'c');
+        $mutex = fopen((string) Path::root()->down('runtime')->down('batch.mutex'), 'c');
         $this->started = time();
         if (!flock($mutex, LOCK_EX|LOCK_NB)) {
             fclose($mutex);
