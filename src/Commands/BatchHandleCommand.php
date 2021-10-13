@@ -14,26 +14,19 @@ use Leadvertex\Plugin\Components\Batch\BatchContainer;
 use Leadvertex\Plugin\Components\Db\Components\Connector;
 use Leadvertex\Plugin\Components\Process\Components\Error;
 use Leadvertex\Plugin\Components\Process\Process;
+use Leadvertex\Plugin\Components\Queue\QueueHandleCommand;
 use Leadvertex\Plugin\Components\Translations\Translator;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
-class BatchHandleCommand extends Command
+class BatchHandleCommand extends QueueHandleCommand
 {
 
     public function __construct()
     {
-        parent::__construct("batch:handle");
-    }
-
-    protected function configure()
-    {
-        $this
-            ->setDescription('Run handle operation in background')
-            ->addArgument('id', InputArgument::REQUIRED);
+        parent::__construct("batch");
     }
 
     /**
@@ -47,7 +40,7 @@ class BatchHandleCommand extends Command
         /** @var Batch $batch */
         $batch = Batch::findById($input->getArgument('id'));
         if (is_null($batch)) {
-            return 0;
+            return Command::SUCCESS;
         }
 
         GraphqlInputToken::setInstance($batch->getToken());
@@ -68,7 +61,7 @@ class BatchHandleCommand extends Command
             throw $exception;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
 }
