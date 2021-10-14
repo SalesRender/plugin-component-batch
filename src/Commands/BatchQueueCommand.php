@@ -26,6 +26,7 @@ class BatchQueueCommand extends QueueCommand
 
     protected function findModels(): array
     {
+        ProcessModel::freeUpMemory();
         return ProcessModel::findByCondition([
             'state' => ProcessModel::STATE_SCHEDULED,
             'id[!]' => array_keys($this->processes),
