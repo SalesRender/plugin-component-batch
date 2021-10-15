@@ -11,10 +11,10 @@ namespace Leadvertex\Plugin\Components\Batch\Commands;
 use Leadvertex\Plugin\Components\Access\Token\GraphqlInputToken;
 use Leadvertex\Plugin\Components\Batch\Batch;
 use Leadvertex\Plugin\Components\Batch\BatchContainer;
+use Leadvertex\Plugin\Components\Batch\Process\Error;
+use Leadvertex\Plugin\Components\Batch\Process\Process;
 use Leadvertex\Plugin\Components\Db\Components\Connector;
-use Leadvertex\Plugin\Components\Process\Components\Error;
-use Leadvertex\Plugin\Components\Process\Process;
-use Leadvertex\Plugin\Components\Queue\QueueHandleCommand;
+use Leadvertex\Plugin\Components\Queue\Commands\QueueHandleCommand;
 use Leadvertex\Plugin\Components\Translations\Translator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,7 +32,7 @@ class BatchHandleCommand extends QueueHandleCommand
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|void|null
+     * @return int
      * @throws Throwable
      */
     protected function execute(InputInterface $input, OutputInterface $output)

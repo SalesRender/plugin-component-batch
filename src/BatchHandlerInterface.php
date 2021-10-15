@@ -8,7 +8,7 @@
 namespace Leadvertex\Plugin\Components\Batch;
 
 
-use Leadvertex\Plugin\Components\Process\Process;
+use Leadvertex\Plugin\Components\Batch\Process\Process;
 
 interface BatchHandlerInterface
 {

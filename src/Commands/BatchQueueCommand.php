@@ -8,16 +8,13 @@
 namespace Leadvertex\Plugin\Components\Batch\Commands;
 
 
+use Leadvertex\Plugin\Components\Batch\Process\Process;
 use Leadvertex\Plugin\Components\Db\ModelInterface;
-use Leadvertex\Plugin\Components\Queue\QueueCommand;
+use Leadvertex\Plugin\Components\Queue\Commands\QueueCommand;
 use Symfony\Component\Console\Output\OutputInterface;
-use Leadvertex\Plugin\Components\Process\Process as ProcessModel;
 
 class BatchQueueCommand extends QueueCommand
 {
-
-
-    private array $failed = [];
 
     public function __construct()
     {
@@ -26,9 +23,9 @@ class BatchQueueCommand extends QueueCommand
 
     protected function findModels(): array
     {
-        ProcessModel::freeUpMemory();
-        return ProcessModel::findByCondition([
-            'state' => ProcessModel::STATE_SCHEDULED,
+        Process::freeUpMemory();
+        return Process::findByCondition([
+            'state' => Process::STATE_SCHEDULED,
             'id[!]' => array_keys($this->processes),
             "ORDER" => ["createdAt" => "ASC"],
             'LIMIT' => $this->limit
@@ -36,7 +33,7 @@ class BatchQueueCommand extends QueueCommand
     }
 
     /**
-     * @param ProcessModel|ModelInterface $model
+     * @param Process|ModelInterface $model
      * @param OutputInterface $output
      */
     protected function startedLog(ModelInterface $model, OutputInterface $output): void

@@ -17,12 +17,20 @@
   },
   "require": {
     "php": ">=7.4.0",
+    "ext-json": "*",
     "leadvertex/plugin-component-db": "^0.3.5",
     "leadvertex/plugin-component-translations": "^0.1.1",
     "leadvertex/plugin-component-access": "^0.1.0",
-    "leadvertex/plugin-component-process": "^0.4.0",
     "leadvertex/plugin-component-api-client": "^0.6.0",
     "leadvertex/plugin-component-form": "^0.10.0",
-    "leadvertex/plugin-component-queue": "^0.1.0"
+    "leadvertex/plugin-component-queue": "^0.2.0"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Leadvertex\\Plugin\\Components\\Batch\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
   }
 }
