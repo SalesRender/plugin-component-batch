@@ -236,9 +236,16 @@ class Process extends Model implements JsonSerializable
 
         $result = null;
         if (!is_null($this->result)) {
+            if ($this->result == '1') {
+                $value = true;
+            } elseif ($this->result == '0') {
+                $value = false;
+            } else {
+                $value = $this->result;
+            }
             $result = [
                 'timestamp' => $this->updatedAt,
-                'value' => $this->result,
+                'value' => $value,
             ];
         }
 
