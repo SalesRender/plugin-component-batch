@@ -23,7 +23,7 @@
     "leadvertex/plugin-component-access": "^0.1.0",
     "leadvertex/plugin-component-api-client": "^0.6.0",
     "leadvertex/plugin-component-form": "^0.10.0",
-    "leadvertex/plugin-component-queue": "^0.2.0"
+    "leadvertex/plugin-component-queue": "^0.3.0"
   },
   "autoload-dev": {
     "psr-4": {
