@@ -81,7 +81,7 @@ final class Batch extends Model
     public function getApiClient(): ApiClient
     {
         return new ApiClient(
-            $this->token->getBackendUri() . 'companies/stark-industries/CRM',
+            $this->token->getBackendUri() . "companies/{$this->token->getCompanyId()}/CRM",
             (string) $this->token->getOutputToken()
         );
     }
