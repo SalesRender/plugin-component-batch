@@ -5,7 +5,7 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Components\Batch\Exceptions;
+namespace SalesRender\Plugin\Components\Batch\Exceptions;
 
 
 use Exception;

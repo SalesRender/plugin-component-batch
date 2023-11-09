@@ -5,10 +5,10 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Components\Batch;
+namespace SalesRender\Plugin\Components\Batch;
 
 
-use Leadvertex\Plugin\Components\Batch\Process\Process;
+use SalesRender\Plugin\Components\Batch\Process\Process;
 
 interface BatchHandlerInterface
 {

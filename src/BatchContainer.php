@@ -5,11 +5,11 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Components\Batch;
+namespace SalesRender\Plugin\Components\Batch;
 
 
-use Leadvertex\Plugin\Components\Batch\Exceptions\BatchContainerException;
-use Leadvertex\Plugin\Components\Form\Form;
+use SalesRender\Plugin\Components\Batch\Exceptions\BatchContainerException;
+use SalesRender\Plugin\Components\Form\Form;
 
 final class BatchContainer
 {

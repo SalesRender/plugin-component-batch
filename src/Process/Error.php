@@ -5,7 +5,7 @@
  * @author Timur Kasumov aka XAKEPEHOK
  */
 
-namespace Leadvertex\Plugin\Components\Batch\Process;
+namespace SalesRender\Plugin\Components\Batch\Process;
 
 
 class Error

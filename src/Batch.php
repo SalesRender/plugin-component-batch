@@ -5,15 +5,15 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Components\Batch;
+namespace SalesRender\Plugin\Components\Batch;
 
 
-use Leadvertex\Plugin\Components\Access\Token\GraphqlInputToken;
-use Leadvertex\Plugin\Components\Access\Token\InputTokenInterface;
-use Leadvertex\Plugin\Components\ApiClient\ApiClient;
-use Leadvertex\Plugin\Components\ApiClient\ApiFilterSortPaginate;
-use Leadvertex\Plugin\Components\Db\Model;
-use Leadvertex\Plugin\Components\Form\FormData;
+use SalesRender\Plugin\Components\Access\Token\GraphqlInputToken;
+use SalesRender\Plugin\Components\Access\Token\InputTokenInterface;
+use SalesRender\Plugin\Components\ApiClient\ApiClient;
+use SalesRender\Plugin\Components\ApiClient\ApiFilterSortPaginate;
+use SalesRender\Plugin\Components\Db\Model;
+use SalesRender\Plugin\Components\Form\FormData;
 use RuntimeException;
 
 final class Batch extends Model

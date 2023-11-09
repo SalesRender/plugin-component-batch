@@ -1,6 +1,6 @@
 <?php
 
-namespace Leadvertex\Plugin\Components\Batch\Process;
+namespace SalesRender\Plugin\Components\Batch\Process;
 
 use PHPUnit\Framework\TestCase;
 

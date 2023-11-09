@@ -1,33 +1,33 @@
 {
-  "name": "leadvertex/plugin-component-batch",
-  "description": "LeadVertex plugin batch component",
+  "name": "salesrender/plugin-component-batch",
+  "description": "SalesRender plugin batch component",
   "type": "library",
   "minimum-stability": "stable",
   "license": "proprietary",
   "authors": [
     {
       "name": "Timur Kasumov aka XAKEPEHOK",
-      "email": "support@leadvertex.com"
+      "email": "support@salesrender.com"
     }
   ],
   "autoload": {
     "psr-4": {
-      "Leadvertex\\Plugin\\Components\\Batch\\": "src/"
+      "SalesRender\\Plugin\\Components\\Batch\\": "src/"
     }
   },
   "require": {
     "php": ">=7.4.0",
     "ext-json": "*",
-    "leadvertex/plugin-component-db": "^0.3.5",
-    "leadvertex/plugin-component-translations": "^0.1.1",
-    "leadvertex/plugin-component-access": "^0.1.0",
-    "leadvertex/plugin-component-api-client": "^0.6.0",
-    "leadvertex/plugin-component-form": "^0.10.0",
-    "leadvertex/plugin-component-queue": "^0.3.0"
+    "salesrender/plugin-component-db": "^0.3.5",
+    "salesrender/plugin-component-translations": "^0.1.1",
+    "salesrender/plugin-component-access": "^0.1.0",
+    "salesrender/plugin-component-api-client": "^0.6.0",
+    "salesrender/plugin-component-form": "^0.10.0",
+    "salesrender/plugin-component-queue": "^0.3.0"
   },
   "autoload-dev": {
     "psr-4": {
-      "Leadvertex\\Plugin\\Components\\Batch\\": "tests/"
+      "SalesRender\\Plugin\\Components\\Batch\\": "tests/"
     }
   },
   "require-dev": {

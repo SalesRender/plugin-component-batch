@@ -5,17 +5,17 @@
  * @author Timur Kasumov aka XAKEPEHOK
  */
 
-namespace Leadvertex\Plugin\Components\Batch\Commands;
+namespace SalesRender\Plugin\Components\Batch\Commands;
 
 
-use Leadvertex\Plugin\Components\Access\Token\GraphqlInputToken;
-use Leadvertex\Plugin\Components\Batch\Batch;
-use Leadvertex\Plugin\Components\Batch\BatchContainer;
-use Leadvertex\Plugin\Components\Batch\Process\Error;
-use Leadvertex\Plugin\Components\Batch\Process\Process;
-use Leadvertex\Plugin\Components\Db\Components\Connector;
-use Leadvertex\Plugin\Components\Queue\Commands\QueueHandleCommand;
-use Leadvertex\Plugin\Components\Translations\Translator;
+use SalesRender\Plugin\Components\Access\Token\GraphqlInputToken;
+use SalesRender\Plugin\Components\Batch\Batch;
+use SalesRender\Plugin\Components\Batch\BatchContainer;
+use SalesRender\Plugin\Components\Batch\Process\Error;
+use SalesRender\Plugin\Components\Batch\Process\Process;
+use SalesRender\Plugin\Components\Db\Components\Connector;
+use SalesRender\Plugin\Components\Queue\Commands\QueueHandleCommand;
+use SalesRender\Plugin\Components\Translations\Translator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

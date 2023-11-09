@@ -5,12 +5,12 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Components\Batch\Commands;
+namespace SalesRender\Plugin\Components\Batch\Commands;
 
 
-use Leadvertex\Plugin\Components\Batch\Process\Process;
-use Leadvertex\Plugin\Components\Db\ModelInterface;
-use Leadvertex\Plugin\Components\Queue\Commands\QueueCommand;
+use SalesRender\Plugin\Components\Batch\Process\Process;
+use SalesRender\Plugin\Components\Db\ModelInterface;
+use SalesRender\Plugin\Components\Queue\Commands\QueueCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class BatchQueueCommand extends QueueCommand

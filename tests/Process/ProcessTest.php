@@ -1,9 +1,9 @@
 <?php
 
-namespace Leadvertex\Plugin\Components\Batch\Process;
+namespace SalesRender\Plugin\Components\Batch\Process;
 
 use InvalidArgumentException;
-use Leadvertex\Plugin\Components\Db\Components\PluginReference;
+use SalesRender\Plugin\Components\Db\Components\PluginReference;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;

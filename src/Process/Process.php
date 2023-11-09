@@ -5,13 +5,13 @@
  * @author Timur Kasumov aka XAKEPEHOK
  */
 
-namespace Leadvertex\Plugin\Components\Batch\Process;
+namespace SalesRender\Plugin\Components\Batch\Process;
 
 
 use InvalidArgumentException;
 use JsonSerializable;
-use Leadvertex\Plugin\Components\Db\Components\PluginReference;
-use Leadvertex\Plugin\Components\Db\Model;
+use SalesRender\Plugin\Components\Db\Components\PluginReference;
+use SalesRender\Plugin\Components\Db\Model;
 use LogicException;
 use RuntimeException;
 
