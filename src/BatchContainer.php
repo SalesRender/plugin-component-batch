@@ -29,17 +29,18 @@ final class BatchContainer
 
     /**
      * @param int $number
+     * @param array $context
      * @return Form|null
      * @throws BatchContainerException
      */
-    public static function getForm(int $number): ?Form
+    public static function getForm(int $number, array $context = []): ?Form
     {
         if (!isset(self::$forms)) {
             throw new BatchContainerException('Batch forms was not configured', 100);
         }
 
         $form = self::$forms;
-        return $form($number);
+        return $form($number, $context);
     }
 
     /**
