@@ -22,7 +22,7 @@
     "salesrender/plugin-component-translations": "^0.1.1",
     "salesrender/plugin-component-access": "^0.1.0",
     "salesrender/plugin-component-api-client": "^0.6.0",
-    "salesrender/plugin-component-form": "^0.10.0",
+    "salesrender/plugin-component-form": "^0.11.0|^0.10.0",
     "salesrender/plugin-component-queue": "^0.3.0"
   },
   "autoload-dev": {
