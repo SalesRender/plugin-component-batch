@@ -98,11 +98,11 @@ final class Batch extends Model
     public static function schema(): array
     {
         return [
-            'token' => ['TEXT', 'NOT NULL'],
-            'fsp' => ['TEXT', 'NOT NULL'],
+            'token' => ['BLOB', 'NOT NULL'],
+            'fsp' => ['BLOB', 'NOT NULL'],
             'lang' => ['CHAR(5)', 'NOT NULL'],
-            'arguments' => ['TEXT'],
-            'options' => ['TEXT'],
+            'arguments' => ['BLOB'],
+            'options' => ['BLOB'],
         ];
     }
 
