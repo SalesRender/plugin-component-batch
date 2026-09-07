@@ -35,7 +35,7 @@ class BatchHandleCommand extends QueueHandleCommand
      * @return int
      * @throws Throwable
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var Batch $batch */
         $batch = Batch::findById($input->getArgument('id'));

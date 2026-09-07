@@ -68,7 +68,7 @@ final class Batch extends Model
         return $this->options[$number] ?? null;
     }
 
-    public function setOptions(int $number, FormData $data)
+    public function setOptions(int $number, FormData $data): void
     {
         $this->options[$number]  = $data;
     }
@@ -82,7 +82,7 @@ final class Batch extends Model
     {
         return new ApiClient(
             $this->token->getBackendUri() . "companies/{$this->token->getCompanyId()}/CRM",
-            (string) $this->token->getOutputToken()
+            $this->token->getOutputToken()->toString()
         );
     }
 

@@ -16,14 +16,14 @@
     }
   },
   "require": {
-    "php": ">=7.4.0",
+    "php": ">=8.4",
     "ext-json": "*",
-    "salesrender/plugin-component-db": "^0.3.5",
-    "salesrender/plugin-component-translations": "^0.1.1",
-    "salesrender/plugin-component-access": "^0.1.0",
-    "salesrender/plugin-component-api-client": "^0.6.0",
-    "salesrender/plugin-component-form": "^0.11.0|^0.10.0",
-    "salesrender/plugin-component-queue": "^0.3.0"
+    "salesrender/plugin-component-db": "^1.0",
+    "salesrender/plugin-component-translations": "^1.0",
+    "salesrender/plugin-component-access": "^1.0",
+    "salesrender/plugin-component-api-client": "^1.0",
+    "salesrender/plugin-component-form": "^1.0",
+    "salesrender/plugin-component-queue": "^1.0"
   },
   "autoload-dev": {
     "psr-4": {
@@ -31,6 +31,6 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.5"
+    "phpunit/phpunit": "^11.0"
   }
 }

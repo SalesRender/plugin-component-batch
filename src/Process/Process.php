@@ -40,17 +40,16 @@ class Process extends Model implements JsonSerializable
 
     protected array $errors = [];
 
-    /** @var int|string|null */
-    protected $result = null;
+    protected int|string|bool|null $result = null;
 
     protected ?string $description = null;
 
-    const STATE_SCHEDULED = 'scheduled';
-    const STATE_PROCESSING = 'processing';
-    const STATE_POST_PROCESSING = 'post_processing';
-    const STATE_ENDED = 'ended';
+    const string STATE_SCHEDULED = 'scheduled';
+    const string STATE_PROCESSING = 'processing';
+    const string STATE_POST_PROCESSING = 'post_processing';
+    const string STATE_ENDED = 'ended';
 
-    public function __construct(PluginReference $reference, string $id, string $description = null)
+    public function __construct(PluginReference $reference, string $id, ?string $description = null)
     {
         $this->companyId = (int) $reference->getCompanyId();
         $this->pluginId = (int) $reference->getId();
@@ -185,7 +184,7 @@ class Process extends Model implements JsonSerializable
         ];
     }
 
-    public function getResult()
+    public function getResult(): int|string|bool|null
     {
         return $this->result;
     }
@@ -224,7 +223,7 @@ class Process extends Model implements JsonSerializable
     /**
      * @inheritDoc
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $init = null;
         if ($this->isInitialized()) {

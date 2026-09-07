@@ -15,6 +15,8 @@ class ProcessTest extends TestCase
 
     private Process $process;
 
+    private array $processInfoArray;
+
     protected function setUp(): void
     {
         parent::setUp();

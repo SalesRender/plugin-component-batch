@@ -11,13 +11,11 @@ namespace SalesRender\Plugin\Components\Batch\Process;
 class Error
 {
 
-    /** @var string */
-    private $message;
+    private string $message;
 
-    /** @var string|null */
-    private $entityId;
+    private ?string $entityId;
 
-    public function __construct(string $message, string $entityId = null)
+    public function __construct(string $message, ?string $entityId = null)
     {
         $this->message = $message;
         $this->entityId = $entityId;
