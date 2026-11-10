@@ -50,6 +50,8 @@ class Process extends Model implements JsonSerializable
     const STATE_POST_PROCESSING = 'post_processing';
     const STATE_ENDED = 'ended';
 
+    const MAX_ERRORS = 50;
+
     public function __construct(PluginReference $reference, string $id, string $description = null)
     {
         $this->companyId = (int) $reference->getCompanyId();
@@ -175,7 +177,7 @@ class Process extends Model implements JsonSerializable
     {
         $this->guardFinished();
         $this->failed++;
-        if (count($this->errors) >= 20) {
+        if (count($this->errors) >= self::MAX_ERRORS) {
             array_shift($this->errors);
         }
 

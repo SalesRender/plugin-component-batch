@@ -99,7 +99,7 @@ class ProcessTest extends TestCase
 
     public function testProcessAddManyErrors()
     {
-        $threshold = 20;
+        $threshold = Process::MAX_ERRORS;
         $this->process->initialize($threshold + 2);
         for ($i = 0; $i < $threshold + 2; $i++) {
             $this->process->addError(new Error('TestError', $i));
